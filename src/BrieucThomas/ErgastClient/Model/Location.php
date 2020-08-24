@@ -9,15 +9,32 @@
 
 namespace BrieucThomas\ErgastClient\Model;
 
+use JMS\Serializer\Annotation\Type;
+
 /**
  * @author Brieuc Thomas <tbrieuc@gmail.com>
  */
 class Location
 {
+    /**
+     * @Type("string")
+     */
     private $locality;
+    /**
+     * @Type("string")
+     */
     private $country;
+    /**
+     * @Type("float")
+     */
     private $latitude;
+    /**
+     * @Type("float")
+     */
     private $longitude;
+    /**
+     * @Type("float")
+     */
     private $altitude;
 
     public function getLocality(): string

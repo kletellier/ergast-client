@@ -20,7 +20,7 @@ class RequestBuilder
 {
     protected $schema = 'http';
     protected $host = 'www.ergast.com';
-    protected $format = 'xml';
+    protected $format = 'json';
     protected $select;
     protected $id;
     protected $series = 'f1';

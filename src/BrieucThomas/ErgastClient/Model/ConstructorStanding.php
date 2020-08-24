@@ -9,11 +9,16 @@
 
 namespace BrieucThomas\ErgastClient\Model;
 
+use JMS\Serializer\Annotation\Type;
+
 /**
  * @author Brieuc Thomas <brieuc.thomas@orange.com>
  */
 class ConstructorStanding extends AbstractStanding
 {
+    /**
+     * @Type("BrieucThomas\ErgastClient\Model\Constructor")
+     */
     private $constructor;
 
     public function getConstructor(): Constructor

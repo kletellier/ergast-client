@@ -10,15 +10,28 @@
 namespace BrieucThomas\ErgastClient\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use JMS\Serializer\Annotation\Type;
 
 /**
  * @author Brieuc Thomas <brieuc.thomas@orange.com>
  */
 class Standings
 {
+     /**
+     * @Type("int")
+     */
     private $season;
+    /**
+     * @Type("int")
+     */
     private $round;
+     /**
+     * @Type("ArrayCollection<BrieucThomas\ErgastClient\Model\DriverStanding>")
+     */
     private $driverStandings;
+    /**
+     * @Type("ArrayCollection<BrieucThomas\ErgastClient\Model\ConstructorStanding>")
+     */
     private $constructorStandings;
 
     public function getSeason(): int

@@ -22,10 +22,7 @@ class ErgastClientFactory
     public static function createErgastClient(): ErgastClient
     {
         $httpClient = new HttpClient();
-        $serializer = SerializerBuilder::create()
-            ->addMetadataDir(__DIR__.'/config/serializer/')
-            ->build()
-        ;
+        $serializer = SerializerBuilder::create()->build();
 
         return new ErgastClient($httpClient, $serializer);
     }

@@ -9,18 +9,44 @@
 
 namespace BrieucThomas\ErgastClient\Model;
 
+use JMS\Serializer\Annotation\Type;
+
 /**
  * @author Brieuc Thomas <brieuc.thomas@orange.com>
  */
 class Driver
 {
+    /**
+     * @Type("string")
+     */
     private $id;
+    /**
+     * @Type("string")
+     */
     private $code;
+    /**
+     * @Type("int")
+     */
     private $number;
+    /**
+     * @Type("string")
+     */
     private $givenName;
+    /**
+     * @Type("string")
+     */
     private $familyName;
+    /**
+     * @Type("string")
+     */
     private $birthDate;
+    /**
+     * @Type("string")
+     */
     private $nationality;
+    /**
+     * @Type("string")
+     */
     private $url;
 
     /**

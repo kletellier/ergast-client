@@ -10,22 +10,56 @@
 namespace BrieucThomas\ErgastClient\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use JMS\Serializer\Annotation\Type;
 
 /**
  * @author Brieuc Thomas <tbrieuc@gmail.com>
  */
 class Race
 {
+     /**
+     * @Type("int")
+     */
     private $season;
+     /**
+     * @Type("int")
+     */
     private $round;
+     /**
+     * @Type("string")
+     */
     private $name;
+      /**
+     * @Type("BrieucThomas\ErgastClient\Model\Circuit")
+     */
     private $circuit;
+     /**
+     * @Type("datetime<Y-m-d|>")
+     */
     private $date;
+    /**
+     * @Type("datetime<H:i:sT|>")
+     */
     private $time;
+    /**
+     * @Type("string")
+     */
     private $url;
+       /**
+     * @Type("ArrayCollection<BrieucThomas\ErgastClient\Model\Qualifying>")
+     */
     private $qualifying;
+       /**
+     * @Type("ArrayCollection<BrieucThomas\ErgastClient\Model\Result>")
+     */
     private $results;
+       /**
+     * @Type("ArrayCollection<BrieucThomas\ErgastClient\Model\Lap>")
+     */
     private $laps;
+       /**
+     * @Type("ArrayCollection<BrieucThomas\ErgastClient\Model\PitStop>")
+     */
     private $pitStops;
 
     /**

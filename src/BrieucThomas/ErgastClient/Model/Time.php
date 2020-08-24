@@ -9,12 +9,20 @@
 
 namespace BrieucThomas\ErgastClient\Model;
 
+use JMS\Serializer\Annotation\Type;
+
 /**
  * @author Brieuc Thomas <brieuc.thomas@orange.com>
  */
 class Time
 {
+    /**
+     * @Type("string")
+     */
     private $value;
+    /**
+     * @Type("int")
+     */
     private $millis;
 
     public function getValue(): string

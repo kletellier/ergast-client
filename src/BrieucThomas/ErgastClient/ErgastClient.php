@@ -24,7 +24,7 @@ class ErgastClient implements ErgastClientInterface
     private $httpClient;
     private $serializer;
     private $supportedMimeTypes = [
-        'application/xml' => 'xml',
+        'application/json' => 'json',
     ];
 
     public function __construct(ClientInterface $httpClient, SerializerInterface $serializer)
@@ -39,7 +39,13 @@ class ErgastClient implements ErgastClientInterface
         $responseContent = $response->getBody()->getContents();
         $responseFormat = $this->getResponseFormat($response);
 
-        return $this->serializer->deserialize($responseContent, Response::class, $responseFormat);
+        // trick for getting MRData root object
+        $data = json_decode($responseContent);
+        $new_data = $data->MRData;
+
+        var_dump($new_data);
+
+        return $this->serializer->deserialize(json_encode($new_data), Response::class, $responseFormat);
     }
 
     private function getResponseFormat(ResponseInterface $response): string

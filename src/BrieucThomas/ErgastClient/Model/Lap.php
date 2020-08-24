@@ -10,13 +10,20 @@
 namespace BrieucThomas\ErgastClient\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use JMS\Serializer\Annotation\Type;
 
 /**
  * @author Brieuc Thomas <tbrieuc@gmail.com>
  */
 class Lap
 {
+     /**
+     * @Type("int")
+     */
     private $number;
+     /**
+     * @Type("ArrayCollection<BrieucThomas\ErgastClient\Model\Timing>")
+     */
     private $timing;
 
     public function getNumber(): int

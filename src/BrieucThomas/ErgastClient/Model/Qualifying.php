@@ -9,17 +9,41 @@
 
 namespace BrieucThomas\ErgastClient\Model;
 
+use JMS\Serializer\Annotation\Type;
+
 /**
  * @author Brieuc Thomas <tbrieuc@gmail.com>
  */
 class Qualifying
 {
+
+      /**
+     * @Type("BrieucThomas\ErgastClient\Model\Driver")
+     */
     private $driver;
+      /**
+     * @Type("BrieucThomas\ErgastClient\Model\Constructor")
+     */
     private $constructor;
+    /**
+     * @Type("int")
+     */
     private $number;
+    /**
+     * @Type("int")
+     */
     private $position;
+    /**
+     * @Type("string")
+     */
     private $q1;
+    /**
+     * @Type("string")
+     */
     private $q2;
+    /**
+     * @Type("string")
+     */
     private $q3;
 
     public function getDriver(): Driver

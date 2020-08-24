@@ -9,15 +9,32 @@
 
 namespace BrieucThomas\ErgastClient\Model;
 
+use JMS\Serializer\Annotation\Type;
+
 /**
  * @author Brieuc Thomas <tbrieuc@gmail.com>
  */
 class PitStop
 {
+    /**
+     * @Type("string")
+     */
     private $driverId;
+    /**
+     * @Type("int")
+     */
     private $stop;
+    /**
+     * @Type("int")
+     */
     private $lap;
+    /**
+     * @Type("datetime<H:i:s>")
+     */
     private $time;
+   /**
+     * @Type("double")
+     */
     private $duration;
 
     public function getDriverId(): string

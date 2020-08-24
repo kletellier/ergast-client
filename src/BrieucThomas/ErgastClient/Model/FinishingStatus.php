@@ -9,13 +9,24 @@
 
 namespace BrieucThomas\ErgastClient\Model;
 
+use JMS\Serializer\Annotation\Type;
+
 /**
  * @author Brieuc Thomas <tbrieuc@gmail.com>
  */
 class FinishingStatus
 {
+     /**
+     * @Type("int")
+     */
     private $id;
+     /**
+     * @Type("string")
+     */
     private $name;
+     /**
+     * @Type("int")
+     */
     private $count;
 
     public function getId(): int

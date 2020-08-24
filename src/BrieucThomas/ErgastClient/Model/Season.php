@@ -9,12 +9,21 @@
 
 namespace BrieucThomas\ErgastClient\Model;
 
+
+use JMS\Serializer\Annotation\Type;
+
 /**
  * @author Brieuc Thomas <tbrieuc@gmail.com>
  */
 class Season
 {
+     /**
+     * @Type("int")
+     */
     private $year;
+     /**
+     * @Type("string")
+     */
     private $url;
 
     /**

@@ -9,14 +9,28 @@
 
 namespace BrieucThomas\ErgastClient\Model;
 
+use JMS\Serializer\Annotation\Type;
+
 /**
  * @author Brieuc Thomas <tbrieuc@gmail.com>
  */
 class Timing
 {
+    /**
+     * @Type("string")
+     */
     private $driverId;
+    /**
+     * @Type("int")
+     */
     private $lap;
+    /**
+     * @Type("int")
+     */
     private $position;
+    /**
+     * @Type("string")
+     */
     private $time;
 
     /**

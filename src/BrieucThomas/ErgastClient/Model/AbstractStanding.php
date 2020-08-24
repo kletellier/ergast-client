@@ -9,14 +9,28 @@
 
 namespace BrieucThomas\ErgastClient\Model;
 
+use JMS\Serializer\Annotation\Type;
+
 /**
  * @author Brieuc Thomas <tbrieuc@gmail.com>
  */
 abstract class AbstractStanding
 {
+    /**
+     * @Type("int")
+     */
     private $position;
+    /**
+     * @Type("string")
+     */
     private $positionText;
+    /**
+     * @Type("float")
+     */
     private $points;
+    /**
+     * @Type("int")
+     */
     private $wins;
 
     public function getPosition(): int

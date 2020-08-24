@@ -9,14 +9,27 @@
 
 namespace BrieucThomas\ErgastClient\Model;
 
+use JMS\Serializer\Annotation\Type;
 /**
  * @author Brieuc Thomas <tbrieuc@gmail.com>
  */
 class Circuit
 {
+    /**
+     * @Type("string")
+     */
     private $id;
+    /**
+     * @Type("string")
+     */
     private $name;
+    /**
+     * @Type("BrieucThomas\ErgastClient\Model\Location")
+     */
     private $location;
+    /**
+     * @Type("string")
+     */
     private $url;
 
     /**

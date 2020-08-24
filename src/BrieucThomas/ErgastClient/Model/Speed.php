@@ -9,12 +9,19 @@
 
 namespace BrieucThomas\ErgastClient\Model;
 
+use JMS\Serializer\Annotation\Type;
 /**
  * @author Brieuc Thomas <brieuc.thomas@orange.com>
  */
 class Speed
 {
+     /**
+     * @Type("float")
+     */
     private $value;
+     /**
+     * @Type("string")
+     */
     private $units;
 
     public function getValue(): float

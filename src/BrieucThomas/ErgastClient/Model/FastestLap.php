@@ -9,14 +9,28 @@
 
 namespace BrieucThomas\ErgastClient\Model;
 
+use JMS\Serializer\Annotation\Type;
+
 /**
  * @author Brieuc Thomas <tbrieuc@gmail.com>
  */
 class FastestLap
 {
+    /**
+     * @Type("int")
+     */
     private $rank;
+    /**
+     * @Type("int")
+     */
     private $lap;
+    /**
+     * @Type("string")
+     */
     private $time;
+    /**
+     * @Type("BrieucThomas\ErgastClient\Model\Speed")
+     */
     private $averageSpeed;
 
     public function getRank(): int

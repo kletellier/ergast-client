@@ -10,23 +10,60 @@
 namespace BrieucThomas\ErgastClient\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use JMS\Serializer\Annotation\Type;
 
 /**
  * @author Brieuc Thomas <tbrieuc@gmail.com>
  */
 class Response
 {
+    /**
+     * @Type("string")
+     */
     private $series;
+    /**
+     * @Type("string")
+     */
     private $url;
+    /**
+     * @Type("int")
+     */
     private $limit;
+    /**
+     * @Type("int")
+     */
     private $offset;
+    /**
+     * @Type("int")
+     */
     private $total;
+    /**
+     * @Type("ArrayCollection<BrieucThomas\ErgastClient\Model\Season>")
+     */
     private $seasons;
+    /**
+     * @Type("ArrayCollection<BrieucThomas\ErgastClient\Model\Race>")
+     */
     private $races;
+    /**
+     * @Type("ArrayCollection<BrieucThomas\ErgastClient\Model\Standings>")
+     */
     private $standings;
+    /**
+     * @Type("ArrayCollection<BrieucThomas\ErgastClient\Model\Circuit>")
+     */
     private $circuits;
+    /**
+     * @Type("ArrayCollection<BrieucThomas\ErgastClient\Model\Driver>")
+     */
     private $drivers;
+    /**
+     * @Type("ArrayCollection<BrieucThomas\ErgastClient\Model\Constructor>")
+     */
     private $constructors;
+    /**
+     * @Type("ArrayCollection<BrieucThomas\ErgastClient\Model\FinishingStatus>")
+     */
     private $finishingStatues;
 
     public function getSeries(): string

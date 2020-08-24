@@ -9,14 +9,28 @@
 
 namespace BrieucThomas\ErgastClient\Model;
 
+use JMS\Serializer\Annotation\Type;
+
 /**
  * @author Brieuc Thomas <brieuc.thomas@orange.com>
  */
 class Constructor
 {
+    /**
+     * @Type("string")
+     */
     private $id;
+    /**
+     * @Type("string")
+     */
     private $name;
+    /**
+     * @Type("string")
+     */
     private $nationality;
+    /**
+     * @Type("string")
+     */
     private $url;
 
     /**
