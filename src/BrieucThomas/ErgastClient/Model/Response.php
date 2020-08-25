@@ -66,6 +66,13 @@ class Response
      */
     private $finishingStatues;
 
+    // inflate from JSON
+    public function __construct($json)
+    {
+        $data = json_decode($json);
+    }
+    
+
     public function getSeries(): string
     {
         return $this->series;

@@ -39,13 +39,7 @@ class ErgastClient implements ErgastClientInterface
         $responseContent = $response->getBody()->getContents();
         $responseFormat = $this->getResponseFormat($response);
 
-        // trick for getting MRData root object
-        $data = json_decode($responseContent);
-        $new_data = $data->MRData;
-
-        var_dump($new_data);
-
-        return $this->serializer->deserialize(json_encode($new_data), Response::class, $responseFormat);
+        return new Response($responseContent);
     }
 
     private function getResponseFormat(ResponseInterface $response): string
