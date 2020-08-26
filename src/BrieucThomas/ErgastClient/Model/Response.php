@@ -69,7 +69,46 @@ class Response
     // inflate from JSON
     public function __construct($json)
     {
-        $data = json_decode($json);
+        try{
+            $data = json_decode($json);
+            $MRData = $data->MRData;
+
+            // retrieve common data
+
+            $this->series = $MRData->series;
+            $this->url = $MRData->url;
+            $this->limit = $MRData->limit;
+            $this->offset = $MRData->offset;
+            $this->total = $MRData->total;
+            $this->drivers = new ArrayCollection();
+            $this->seasons = new ArrayCollection();
+            $this->constructors = new ArrayCollection();
+            $this->finishingStatues = new ArrayCollection();
+            $this->circuits = new ArrayCollection();
+            $this->standings = new ArrayCollection();
+            $this->races = new ArrayCollection();
+
+            // retrieve all collections
+            if(isset($MRData->DriverTable))
+            {
+                $this->drivers = $this->fillDriversCollection($MRData->DriverTable);
+
+            }
+        }
+        catch(\Exception $ex)
+        {
+
+        }     
+    }
+
+    private function fillDriversCollection($data) : ArrayCollection
+    {
+        $ret = new ArrayCollection();
+        foreach($data->Drivers as $driver)
+        {
+            $ret[] = new \BrieucThomas\ErgastClient\Model\Driver($driver);
+        }
+        return $ret;
     }
     
 

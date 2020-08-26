@@ -49,6 +49,16 @@ class Driver
      */
     private $url;
 
+    public function __construct($data)
+    {
+        $this->id = $data->driverId;
+        $this->url = $data->url;
+        $this->givenName = $data->givenName;
+        $this->familyName = $data->familyName;
+        $this->birthDate = $data->dateOfBirth;
+        $this->nationality = $data->nationality;
+    }
+
     /**
      * Returns the driver slug.
      *
