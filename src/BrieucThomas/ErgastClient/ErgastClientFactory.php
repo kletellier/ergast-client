@@ -20,8 +20,7 @@ class ErgastClientFactory
 {
     public static function createErgastClient(): ErgastClient
     {
-        $httpClient = new HttpClient();
-
+        $httpClient = new HttpClient(['verify'=>false]);
         return new ErgastClient($httpClient);
     }
 }
