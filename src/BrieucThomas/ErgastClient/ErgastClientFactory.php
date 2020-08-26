@@ -10,7 +10,6 @@
 namespace BrieucThomas\ErgastClient;
 
 use GuzzleHttp\Client as HttpClient;
-use JMS\Serializer\SerializerBuilder;
 
 /**
  * The ergast client factory.
@@ -22,8 +21,7 @@ class ErgastClientFactory
     public static function createErgastClient(): ErgastClient
     {
         $httpClient = new HttpClient();
-        $serializer = SerializerBuilder::create()->build();
 
-        return new ErgastClient($httpClient, $serializer);
+        return new ErgastClient($httpClient);
     }
 }

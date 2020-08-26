@@ -13,7 +13,6 @@ use BrieucThomas\ErgastClient\ErgastClient;
 use BrieucThomas\ErgastClient\Model\Response as ErgastResponse;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Response as HttpResponse;
-use JMS\Serializer\SerializerBuilder;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -412,8 +411,7 @@ class ErgastClientTest extends \PHPUnit_Framework_TestCase
     private function deserializeHttpResponse(HttpResponse $httpResponse): ErgastResponse
     {
         $httpClient = $this->createHttpClient($httpResponse);
-        $serializer = SerializerBuilder::create()->build();
-        $ergastClient = new ErgastClient($httpClient, $serializer);
+        $ergastClient = new ErgastClient($httpClient);
         $httpRequest = $this->createHttpRequest();
 
         return $ergastClient->execute($httpRequest);

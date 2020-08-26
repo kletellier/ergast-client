@@ -12,7 +12,6 @@ namespace BrieucThomas\ErgastClient;
 use BrieucThomas\ErgastClient\Exception\BadResponseFormatException;
 use BrieucThomas\ErgastClient\Model\Response;
 use GuzzleHttp\ClientInterface;
-use JMS\Serializer\SerializerInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -22,15 +21,13 @@ use Psr\Http\Message\ResponseInterface;
 class ErgastClient implements ErgastClientInterface
 {
     private $httpClient;
-    private $serializer;
     private $supportedMimeTypes = [
         'application/json' => 'json',
     ];
 
-    public function __construct(ClientInterface $httpClient, SerializerInterface $serializer)
+    public function __construct(ClientInterface $httpClient)
     {
         $this->httpClient = $httpClient;
-        $this->serializer = $serializer;
     }
 
     public function execute(RequestInterface $request): Response
