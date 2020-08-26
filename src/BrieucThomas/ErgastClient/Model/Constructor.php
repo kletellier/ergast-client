@@ -33,6 +33,14 @@ class Constructor
      */
     private $url;
 
+    public function __construct($data)
+    {
+        $this->id = $data->constructorId;
+        $this->name = $data->name;
+        $this->url = $data->url;
+        $this->nationality = $data->nationality;
+    }
+
     /**
      * Returns the constructor slug.
      *

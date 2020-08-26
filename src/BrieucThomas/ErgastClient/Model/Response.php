@@ -92,7 +92,10 @@ class Response
             if(isset($MRData->DriverTable))
             {
                 $this->drivers = $this->fillDriversCollection($MRData->DriverTable);
-
+            }
+            if(isset($MRData->ConstructorTable))
+            {
+                $this->constructors = $this->fillConstructorsCollection($MRData->ConstructorTable);
             }
         }
         catch(\Exception $ex)
@@ -107,6 +110,16 @@ class Response
         foreach($data->Drivers as $driver)
         {
             $ret[] = new \BrieucThomas\ErgastClient\Model\Driver($driver);
+        }
+        return $ret;
+    }
+
+    private function fillConstructorsCollection($data) : ArrayCollection
+    {
+        $ret = new ArrayCollection();
+        foreach($data->Constructors as $constructor)
+        {
+            $ret[] = new \BrieucThomas\ErgastClient\Model\Constructor($constructor);
         }
         return $ret;
     }

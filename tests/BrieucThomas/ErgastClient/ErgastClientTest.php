@@ -19,7 +19,33 @@ use Psr\Http\Message\ResponseInterface;
 
 class ErgastClientTest extends \PHPUnit_Framework_TestCase
 {
-    
+    public function testDeserializeConstructors()
+    {
+        $httpResponse = $this->createHttpResponseFromFile('constructors.json', 'application/json; charset=utf-8');
+        $ergastResponse = $this->deserializeHttpResponse($httpResponse);
+
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Response', $ergastResponse);
+        $this->assertSame('f1', $ergastResponse->getSeries());
+        $this->assertSame(20, $ergastResponse->getTotal());
+        $this->assertSame(30, $ergastResponse->getLimit());
+        $this->assertSame(0, $ergastResponse->getOffset());
+        $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $ergastResponse->getConstructors());
+        $this->assertCount(20, $ergastResponse->getConstructors());
+
+        $constructor = $ergastResponse->getConstructors()->first();
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Constructor', $constructor);
+        $this->assertSame('ags', $constructor->getId());
+        $this->assertSame('AGS', $constructor->getName());
+        $this->assertSame('French', $constructor->getNationality());
+        $this->assertSame('http://en.wikipedia.org/wiki/Automobiles_Gonfaronnaises_Sportives', $constructor->getUrl());
+
+        $constructor = $ergastResponse->getConstructors()->next();
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Constructor', $constructor);
+        $this->assertSame('arrows', $constructor->getId());
+        $this->assertSame('Arrows', $constructor->getName());
+        $this->assertSame('British', $constructor->getNationality());
+        $this->assertSame('http://en.wikipedia.org/wiki/Arrows_Grand_Prix_International', $constructor->getUrl());
+    }
 
     public function testDeserializeDrivers()
     {
