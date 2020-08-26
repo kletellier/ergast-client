@@ -19,6 +19,35 @@ use Psr\Http\Message\ResponseInterface;
 
 class ErgastClientTest extends \PHPUnit_Framework_TestCase
 {   
+    public function testDeserializeSeasons()
+    {
+        $httpResponse = $this->createHttpResponseFromFile('seasons.json', 'application/json; charset=utf-8');
+        $ergastResponse = $this->deserializeHttpResponse($httpResponse);
+
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Response', $ergastResponse);
+        $this->assertSame('f1', $ergastResponse->getSeries());
+        $this->assertSame(71, $ergastResponse->getTotal());
+        $this->assertSame(30, $ergastResponse->getLimit());
+        $this->assertSame(0, $ergastResponse->getOffset());
+        $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $ergastResponse->getSeasons());
+        $this->assertCount(30, $ergastResponse->getSeasons());
+
+        $season = $ergastResponse->getSeasons()->first();
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Season', $season);
+        $this->assertSame(1950, $season->getYear());
+        $this->assertSame('https://en.wikipedia.org/wiki/1950_Formula_One_season', $season->getUrl());
+
+        $season = $ergastResponse->getSeasons()->next();
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Season', $season);
+        $this->assertSame(1951, $season->getYear());
+        $this->assertSame('https://en.wikipedia.org/wiki/1951_Formula_One_season', $season->getUrl());
+
+        $season = $ergastResponse->getSeasons()->next();
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Season', $season);
+        $this->assertSame(1952, $season->getYear());
+        $this->assertSame('https://en.wikipedia.org/wiki/1952_Formula_One_season', $season->getUrl());
+    }
+
     public function testDeserializeFinishingStatus()
     {
         $httpResponse = $this->createHttpResponseFromFile('status.json', 'application/json; charset=utf-8');

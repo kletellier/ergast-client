@@ -26,6 +26,12 @@ class Season
      */
     private $url;
 
+    public function __construct($data)
+    {
+        $this->year = $data->season;
+        $this->url = $data->url;
+    }
+
     /**
      * Returns the season year on 4 digits.
      *

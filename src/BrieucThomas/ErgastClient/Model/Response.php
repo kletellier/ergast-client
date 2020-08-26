@@ -105,6 +105,10 @@ class Response
             {
                 $this->finishingStatues = $this->fillStatusCollection($MRData->StatusTable);
             }
+            if(isset($MRData->SeasonTable))
+            {
+                $this->seasons = $this->fillSeasonsCollection($MRData->SeasonTable);
+            }
         }
         catch(\Exception $ex)
         {
@@ -118,6 +122,16 @@ class Response
         foreach($data->Drivers as $driver)
         {
             $ret[] = new \BrieucThomas\ErgastClient\Model\Driver($driver);
+        }
+        return $ret;
+    }
+
+    private function fillSeasonsCollection($data) : ArrayCollection
+    {
+        $ret = new ArrayCollection();
+        foreach($data->Seasons as $season)
+        {
+            $ret[] = new \BrieucThomas\ErgastClient\Model\Season($season);
         }
         return $ret;
     }
