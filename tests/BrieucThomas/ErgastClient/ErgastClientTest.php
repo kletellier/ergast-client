@@ -19,6 +19,80 @@ use Psr\Http\Message\ResponseInterface;
 
 class ErgastClientTest extends \PHPUnit_Framework_TestCase
 {   
+    public function testDeserializeDriverStandings()
+    {
+        $httpResponse = $this->createHttpResponseFromFile('driverStandings.json', 'application/json; charset=utf-8');
+        $ergastResponse = $this->deserializeHttpResponse($httpResponse);
+
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Response', $ergastResponse); 
+        $this->assertSame('f1', $ergastResponse->getSeries());
+        $this->assertSame(47, $ergastResponse->getTotal());
+        $this->assertSame(30, $ergastResponse->getLimit());
+        $this->assertSame(0, $ergastResponse->getOffset());
+        $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $ergastResponse->getStandings());
+        $this->assertCount(1, $ergastResponse->getStandings());
+
+        $standings = $ergastResponse->getStandings()->first();
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Standings', $standings);
+        $this->assertSame(1989, $standings->getSeason());
+        $this->assertSame(16, $standings->getRound());
+        $this->assertCount(30, $standings->getDriverStandings());
+
+        $driverStandings = $standings->getDriverStandings()->first();
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\DriverStanding', $driverStandings);
+        $this->assertSame('prost', $driverStandings->getDriver()->getId());
+        $this->assertSame('mclaren', $driverStandings->getConstructors()->first()->getId());
+        $this->assertSame(76.0, $driverStandings->getPoints());
+        $this->assertSame(4, $driverStandings->getWins());
+        $this->assertSame(1, $driverStandings->getPosition());
+        $this->assertSame('1', $driverStandings->getPositionText());
+
+        $driverStanding = $standings->getDriverStandings()->next();
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\DriverStanding', $driverStandings);
+        $this->assertSame('senna', $driverStanding->getDriver()->getId());
+        $this->assertSame('mclaren', $driverStanding->getConstructors()->first()->getId());
+        $this->assertSame(60.0, $driverStanding->getPoints());
+        $this->assertSame(6, $driverStanding->getWins());
+        $this->assertSame(2, $driverStanding->getPosition());
+        $this->assertSame('2', $driverStanding->getPositionText());
+    }
+
+    public function testDeserializeConstructorStandings()
+    {
+        $httpResponse = $this->createHttpResponseFromFile('constructorStandings.json', 'application/json; charset=utf-8');
+        $ergastResponse = $this->deserializeHttpResponse($httpResponse);
+
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Response', $ergastResponse);
+        $this->assertSame('f1', $ergastResponse->getSeries());
+        $this->assertSame(20, $ergastResponse->getTotal());
+        $this->assertSame(30, $ergastResponse->getLimit());
+        $this->assertSame(0, $ergastResponse->getOffset());
+        $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $ergastResponse->getStandings());
+        $this->assertCount(1, $ergastResponse->getStandings());
+
+        $standings = $ergastResponse->getStandings()->first();
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Standings', $standings);
+        $this->assertSame(1989, $standings->getSeason());
+        $this->assertSame(16, $standings->getRound());
+        $this->assertCount(20, $standings->getConstructorStandings());
+
+        $constructorStanding = $standings->getConstructorStandings()->first();
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\ConstructorStanding', $constructorStanding);
+        $this->assertSame('mclaren', $constructorStanding->getConstructor()->getId());
+        $this->assertSame(141.0, $constructorStanding->getPoints());
+        $this->assertSame(10, $constructorStanding->getWins());
+        $this->assertSame(1, $constructorStanding->getPosition());
+        $this->assertSame('1', $constructorStanding->getPositionText());
+
+        $constructorStanding = $standings->getConstructorStandings()->next();
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\ConstructorStanding', $constructorStanding);
+        $this->assertSame('williams', $constructorStanding->getConstructor()->getId());
+        $this->assertSame(77.0, $constructorStanding->getPoints());
+        $this->assertSame(2, $constructorStanding->getWins());
+        $this->assertSame(2, $constructorStanding->getPosition());
+        $this->assertSame('2', $constructorStanding->getPositionText());
+    }
+
     public function testDeserializeSeasons()
     {
         $httpResponse = $this->createHttpResponseFromFile('seasons.json', 'application/json; charset=utf-8');

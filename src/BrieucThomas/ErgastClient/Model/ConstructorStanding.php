@@ -21,9 +21,9 @@ class ConstructorStanding extends AbstractStanding
      */
     private $constructor;
 
-    function __construct() {
-        parent::__construct();
-        
+    function __construct($data) {
+        parent::__construct($data);
+        $this->constructor = new \BrieucThomas\ErgastClient\Model\Constructor($data->Constructor);        
     }
 
     public function getConstructor(): Constructor

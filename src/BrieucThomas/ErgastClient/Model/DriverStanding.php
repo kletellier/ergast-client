@@ -27,8 +27,21 @@ class DriverStanding extends AbstractStanding
      */
     private $constructors;
 
-    function __construct() {
-        parent::__construct(); 
+    function __construct($data) {
+        parent::__construct($data); 
+
+        $this->driver = new \BrieucThomas\ErgastClient\Model\Driver($data->Driver);
+        $this->constructors = $this->fillConstructorsCollection($data);
+    }
+
+    private function fillConstructorsCollection($data) : ArrayCollection
+    {
+        $ret = new ArrayCollection();
+        foreach($data->Constructors as $constructor)
+        {
+            $ret[] = new \BrieucThomas\ErgastClient\Model\Constructor($constructor);
+        }
+        return $ret;
     }
 
     public function getDriver(): Driver

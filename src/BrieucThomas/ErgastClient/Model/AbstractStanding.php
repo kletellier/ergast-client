@@ -33,9 +33,12 @@ abstract class AbstractStanding
      */
     private $wins;
     
-    public function __construct()
-    {
-        
+    public function __construct($data)
+    {   
+        $this->position = $data->position;
+        $this->positionText = $data->positionText;
+        $this->points = (float)$data->points;
+        $this->wins = $data->wins;
     }
 
     public function getPosition(): int
