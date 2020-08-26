@@ -24,6 +24,12 @@ class Speed
      */
     private $units;
 
+    public function __construct($data)
+    {
+        $this->units = $data->units;
+        $this->value = (float)$data->speed;
+    }
+
     public function getValue(): float
     {
         return $this->value;

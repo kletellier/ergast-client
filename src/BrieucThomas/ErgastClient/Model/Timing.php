@@ -33,6 +33,14 @@ class Timing
      */
     private $time;
 
+    public function __construct($data,$lap)
+    {
+        $this->driverId = $data->driverId;
+        $this->position = $data->position;
+        $this->time = $data->time;
+        $this->lap = $lap;
+    }
+
     /**
      * Returns the driver slug.
      *

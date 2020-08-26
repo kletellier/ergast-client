@@ -25,6 +25,11 @@ class Time
      */
     private $millis;
 
+    public function __construct($data)
+    {
+        $this->value = $this->time;        
+    }
+
     public function getValue(): string
     {
         return $this->value;
