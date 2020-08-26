@@ -28,14 +28,34 @@ class ErgastClientTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Response', $ergastResponse);        
         $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $ergastResponse->getDrivers());        
+        $this->assertCount(30, $ergastResponse->getDrivers());
+        $this->assertSame(848, $ergastResponse->getTotal());
 
         $driver = $ergastResponse->getDrivers()->first();
         $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Driver', $driver);
         $this->assertSame('abate', $driver->getId());
-        $this->assertSame('Abate', $driver->getFamilyName()); 
-    }
+        $this->assertEmpty($driver->getCode());
+        $this->assertSame('Carlo', $driver->getGivenName());
+        $this->assertSame('Abate', $driver->getFamilyName());
+        $this->assertInstanceOf('\DateTime', $driver->getBirthDate());
+        $this->assertSame('1932-07-10T00:00:00+0000', $driver->getBirthDate()->format(\DateTime::ISO8601));
+        $this->assertSame('Italian', $driver->getNationality());
+        $this->assertNull($driver->getNumber());
+        $this->assertSame('http://en.wikipedia.org/wiki/Carlo_Mario_Abate', $driver->getUrl());
 
-     
+        $driver = $ergastResponse->getDrivers()->next();
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Driver', $driver);
+        $this->assertSame('abecassis', $driver->getId());
+        $this->assertEmpty($driver->getCode());
+        $this->assertSame('George', $driver->getGivenName());
+        $this->assertSame('Abecassis', $driver->getFamilyName());
+        $this->assertInstanceOf('\DateTime', $driver->getBirthDate());
+        $this->assertSame('1913-03-21T00:00:00+0000', $driver->getBirthDate()->format(\DateTime::ISO8601));
+        $this->assertSame('British', $driver->getNationality());
+        $this->assertNull($driver->getNumber());
+        $this->assertSame('http://en.wikipedia.org/wiki/George_Abecassis', $driver->getUrl());
+
+    }     
 
     private function createHttpResponseFromFile(string $fixture, string $contentType): HttpResponse
     {
