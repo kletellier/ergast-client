@@ -11,6 +11,7 @@ namespace BrieucThomas\ErgastClient\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use JMS\Serializer\Annotation\Type;
+use phpDocumentor\Reflection\Types\Array_;
 
 /**
  * @author Brieuc Thomas <tbrieuc@gmail.com>
@@ -61,6 +62,28 @@ class Race
      * @Type("ArrayCollection<BrieucThomas\ErgastClient\Model\PitStop>")
      */
     private $pitStops;
+
+    public function __construct($data)
+    {
+        $this->season = $data->season;
+        $this->round = $data->round;
+        $this->url = $data->url;
+        $this->name = $data->raceName;
+        $this->circuit = new \BrieucThomas\ErgastClient\Model\Circuit($data->Circuit);
+        $this->date =  \DateTime::createFromFormat("Y-m-d|",$data->date);
+        
+        if(isset($data->time))
+        {
+            $this->time = \DateTime::createFromFormat("H:i:sT",$data->time);
+        }
+        
+        $this->qualifying = new ArrayCollection();
+        $this->results = new ArrayCollection();
+        $this->laps = new ArrayCollection();
+        $this->pitStops = new ArrayCollection();
+
+         // fill optional ArrayCollection
+    }
 
     /**
      * Returns the season year on 4 digits.

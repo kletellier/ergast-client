@@ -113,11 +113,25 @@ class Response
             {
                 $this->standings = $this->fillStandingsCollection($MRData->StandingsTable);
             }
+            if(isset($MRData->RaceTable))
+            {
+                $this->races = $this->fillRacesCollection($MRData->RaceTable);
+            }
         }
         catch(\Exception $ex)
         {
             var_dump($ex->getMessage());
         }     
+    }
+
+    private function fillRacesCollection($data) : ArrayCollection
+    {
+        $ret = new ArrayCollection();
+        foreach($data->Races as $race)
+        {
+            $ret[] = new \BrieucThomas\ErgastClient\Model\Race($race);
+        }
+        return $ret;
     }
 
     private function fillDriversCollection($data) : ArrayCollection

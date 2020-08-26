@@ -19,6 +19,42 @@ use Psr\Http\Message\ResponseInterface;
 
 class ErgastClientTest extends \PHPUnit_Framework_TestCase
 {   
+    public function testDeserializeRaces()
+    {
+        $httpResponse = $this->createHttpResponseFromFile('races.json', 'application/json; charset=utf-8');
+        $ergastResponse = $this->deserializeHttpResponse($httpResponse);
+
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Response', $ergastResponse);
+        $this->assertSame('f1', $ergastResponse->getSeries());
+        $this->assertSame(16, $ergastResponse->getTotal());
+        $this->assertSame(30, $ergastResponse->getLimit());
+        $this->assertSame(0, $ergastResponse->getOffset());
+        $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $ergastResponse->getRaces());
+        $this->assertCount(16, $ergastResponse->getRaces());
+
+        $race = $ergastResponse->getRaces()->first();
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Race', $race);
+        $this->assertSame(1989, $race->getSeason());
+        $this->assertSame(1, $race->getRound());
+        $this->assertSame('Brazilian Grand Prix', $race->getName());
+        $this->assertSame('1989-03-26', $race->getDate()->format('Y-m-d'));
+        $this->assertNull($race->getTime());
+        $this->assertSame('1989-03-26T00:00:00+0000', $race->getStartDate()->format(\DateTime::ISO8601));
+        $this->assertSame('http://en.wikipedia.org/wiki/1989_Brazilian_Grand_Prix', $race->getUrl());
+        $this->assertSame('jacarepagua', $race->getCircuit()->getId());
+
+        $race = $ergastResponse->getRaces()->next();
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Race', $race);
+        $this->assertSame(1989, $race->getSeason());
+        $this->assertSame(2, $race->getRound());
+        $this->assertSame('San Marino Grand Prix', $race->getName());
+        $this->assertSame('1989-04-23', $race->getDate()->format('Y-m-d'));
+        $this->assertNull($race->getTime());
+        $this->assertSame('1989-04-23T00:00:00+0000', $race->getStartDate()->format(\DateTime::ISO8601));
+        $this->assertSame('http://en.wikipedia.org/wiki/1989_San_Marino_Grand_Prix', $race->getUrl());
+        $this->assertSame('imola', $race->getCircuit()->getId());
+    }
+
     public function testDeserializeDriverStandings()
     {
         $httpResponse = $this->createHttpResponseFromFile('driverStandings.json', 'application/json; charset=utf-8');
