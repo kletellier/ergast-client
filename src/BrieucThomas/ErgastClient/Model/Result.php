@@ -61,6 +61,34 @@ class Result
      */
     private $fastestLap;
 
+    public function __construct($data)
+    {
+        
+        $this->driver = new \BrieucThomas\ErgastClient\Model\Driver($data->Driver);
+        $this->constructor = new \BrieucThomas\ErgastClient\Model\Constructor($data->Constructor);
+        $this->number = $data->number;
+        $this->position = $data->position;
+        $this->positionText = $data->positionText;
+        $this->points = (float)$data->points;
+        $this->grid = $data->grid;
+        $this->laps = $data->laps;    
+        if(isset($data->Time))
+        {
+            $this->time = new \BrieucThomas\ErgastClient\Model\Time($data->Time);   
+        }
+        if(isset($data->FastestLap))
+        {
+            $this->fastestLap = new \BrieucThomas\ErgastClient\Model\FastestLap($data->FastestLap);
+        }      
+        $status = new \stdClass();
+        $status->status = $data->status;
+        $status->statusId = -1;
+        $status->count = 1;
+
+        $this->status = new \BrieucThomas\ErgastClient\Model\FinishingStatus($status);
+         
+    }
+
     public function getDriver(): Driver
     {
         return $this->driver;

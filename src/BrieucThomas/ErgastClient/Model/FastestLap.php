@@ -33,6 +33,14 @@ class FastestLap
      */
     private $averageSpeed;
 
+    public function __construct($data)
+    {        
+        $this->rank = $data->rank;
+        $this->lap = $data->lap;
+        $this->time = $data->Time->time;
+        $this->averageSpeed = new \BrieucThomas\ErgastClient\Model\Speed($data->AverageSpeed);
+    }
+
     public function getRank(): int
     {
         return $this->rank;

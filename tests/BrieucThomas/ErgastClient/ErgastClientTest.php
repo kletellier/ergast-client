@@ -18,6 +18,44 @@ use Psr\Http\Message\ResponseInterface;
 
 class ErgastClientTest extends \PHPUnit_Framework_TestCase
 {   
+    public function testDeserializeResults()
+    {
+        $httpResponse = $this->createHttpResponseFromFile('results.json', 'application/json; charset=utf-8');
+        $ergastResponse = $this->deserializeHttpResponse($httpResponse);
+
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Response', $ergastResponse);
+        $this->assertSame('f1', $ergastResponse->getSeries());
+        $this->assertSame(30, $ergastResponse->getLimit());
+        $this->assertSame(0, $ergastResponse->getOffset());
+        $this->assertSame(20, $ergastResponse->getTotal());
+
+        $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $ergastResponse->getRaces());
+        $this->assertCount(1, $ergastResponse->getRaces());
+        $race = $ergastResponse->getRaces()->first();
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Race', $race);
+        $this->assertSame('Turkish Grand Prix', $race->getName());
+        $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $race->getResults());
+        $this->assertCount(20, $race->getResults());
+
+        $result = $race->getResults()->first();
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Result', $result);
+        $this->assertSame('massa', $result->getDriver()->getId());
+        $this->assertSame('ferrari', $result->getConstructor()->getId());
+        $this->assertSame(1, $result->getPosition());
+        $this->assertSame('1', $result->getPositionText());
+        $this->assertSame(10.0, $result->getPoints());
+        $this->assertSame(1, $result->getGrid());
+        $this->assertSame(58, $result->getLaps());
+        $this->assertSame(2, $result->getNumber());
+        $this->assertSame('Finished', $result->getStatus()->getName());
+        $this->assertSame('1:26:49.451', $result->getTime()->getValue());
+        $this->assertSame(5209451, $result->getTime()->getMillis());
+        $this->assertSame('1:26.666', $result->getFastestLap()->getTime());
+        $this->assertSame(3, $result->getFastestLap()->getRank());
+        $this->assertSame(16, $result->getFastestLap()->getLap());
+        $this->assertSame(221.734, $result->getFastestLap()->getAverageSpeed()->getValue());
+        $this->assertSame('kph', $result->getFastestLap()->getAverageSpeed()->getUnits());
+    }
 
     public function testDeserializeLapTimes()
     {

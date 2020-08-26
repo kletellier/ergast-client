@@ -27,7 +27,11 @@ class Time
 
     public function __construct($data)
     {
-        $this->value = $this->time;        
+        $this->value = $data->time;    
+        if(isset($data->millis))
+        {
+            $this->millis = $data->millis;
+        }    
     }
 
     public function getValue(): string

@@ -95,6 +95,20 @@ class Race
         {             
             $this->laps = $this->fillLapsCollection($data->Laps);
         }
+        if(isset($data->Results))
+        {             
+            $this->results = $this->fillResultsCollection($data->Results);
+        }
+    }
+
+    private function fillResultsCollection($data) : ArrayCollection
+    {
+        $ret = new ArrayCollection();
+        foreach($data as $result)
+        {
+            $ret[] = new \BrieucThomas\ErgastClient\Model\Result($result);
+        }
+        return $ret;
     }
 
     private function fillLapsCollection($data) : ArrayCollection
