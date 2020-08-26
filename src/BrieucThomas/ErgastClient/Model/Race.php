@@ -91,6 +91,20 @@ class Race
         {             
             $this->qualifying = $this->fillQualifyingCollection($data->QualifyingResults);
         }
+        if(isset($data->Laps))
+        {             
+            $this->laps = $this->fillLapsCollection($data->Laps);
+        }
+    }
+
+    private function fillLapsCollection($data) : ArrayCollection
+    {
+        $ret = new ArrayCollection();
+        foreach($data as $lap)
+        {
+            $ret[] = new \BrieucThomas\ErgastClient\Model\Lap($lap);
+        }
+        return $ret;
     }
 
     private function fillPitStopsCollection($data) : ArrayCollection

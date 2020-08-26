@@ -26,6 +26,22 @@ class Lap
      */
     private $timing;
 
+    public function __construct($data)
+    {
+        $this->number = $data->number;
+        $this->timing = $this->fillTimingsCollection($data->Timings,$this->number); 
+    }
+
+    private function fillTimingsCollection($data,$lap) : ArrayCollection
+    {
+        $ret = new ArrayCollection();
+        foreach($data as $timing)
+        {
+            $ret[] = new \BrieucThomas\ErgastClient\Model\Timing($timing,$lap);
+        }
+        return $ret;
+    } 
+
     public function getNumber(): int
     {
         return $this->number;

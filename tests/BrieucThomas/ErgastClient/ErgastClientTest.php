@@ -20,6 +20,45 @@ use Psr\Http\Message\ResponseInterface;
 class ErgastClientTest extends \PHPUnit_Framework_TestCase
 {   
 
+    public function testDeserializeLapTimes()
+    {
+        $httpResponse = $this->createHttpResponseFromFile('laptimes.json', 'application/json; charset=utf-8');
+        $ergastResponse = $this->deserializeHttpResponse($httpResponse);
+
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Response', $ergastResponse);
+        $this->assertSame('f1', $ergastResponse->getSeries());
+        $this->assertSame(24, $ergastResponse->getTotal());
+        $this->assertSame(30, $ergastResponse->getLimit());
+        $this->assertSame(0, $ergastResponse->getOffset());
+        $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $ergastResponse->getRaces());
+        $this->assertCount(1, $ergastResponse->getRaces());
+
+        $race = $ergastResponse->getRaces()->first();
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Race', $race);
+        $this->assertCount(1, $race->getLaps());
+
+        $lap = $race->getLaps()->first();
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Lap', $lap);
+        $this->assertSame(1, $lap->getNumber());
+        $this->assertCount(24, $lap->getTiming());
+
+        $timing = $lap->getTiming()->first();
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Timing', $timing);
+        $this->assertSame(1, $timing->getLap());
+        $this->assertSame(1, $timing->getPosition());
+        $this->assertSame('alonso', $timing->getDriverId());
+        $this->assertSame('1:34.494', $timing->getTime());
+
+        $timing = $lap->getTiming()->next();
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Timing', $timing);
+        $this->assertSame(1, $timing->getLap());
+        $this->assertSame(2, $timing->getPosition());
+        $this->assertSame('vettel', $timing->getDriverId());
+        $this->assertSame('1:35.274', $timing->getTime());
+
+         
+    }
+
     public function testDeserializeQualifying()
     {
         $httpResponse = $this->createHttpResponseFromFile('qualifying.json', 'application/json; charset=utf-8');
