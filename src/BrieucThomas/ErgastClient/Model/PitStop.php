@@ -37,6 +37,15 @@ class PitStop
      */
     private $duration;
 
+    public function __construct($data)
+    {
+        $this->driverId = $data->driverId;
+        $this->stop = $data->stop;
+        $this->lap = $data->lap;
+        $this->time = \DateTime::createFromFormat("H:i:s",$data->time);
+        $this->duration = (float)$data->duration;
+    }
+
     public function getDriverId(): string
     {
         return $this->driverId;

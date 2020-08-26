@@ -19,6 +19,39 @@ use Psr\Http\Message\ResponseInterface;
 
 class ErgastClientTest extends \PHPUnit_Framework_TestCase
 {   
+    public function testDeserializePitStops()
+    {
+        $httpResponse = $this->createHttpResponseFromFile('pitstops.json', 'application/json; charset=utf-8');
+        $ergastResponse = $this->deserializeHttpResponse($httpResponse);
+
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Response', $ergastResponse);
+        $this->assertSame('f1', $ergastResponse->getSeries());
+        $this->assertSame(47, $ergastResponse->getTotal());
+        $this->assertSame(30, $ergastResponse->getLimit());
+        $this->assertSame(0, $ergastResponse->getOffset());
+        $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $ergastResponse->getRaces());
+        $this->assertCount(1, $ergastResponse->getRaces());
+
+        $race = $ergastResponse->getRaces()->first();
+        $this->assertCount(30, $race->getPitStops());
+
+        $pitStop = $race->getPitStops()->first();
+
+        $this->assertSame('massa', $pitStop->getDriverId());
+        $this->assertSame(21.384, $pitStop->getDuration());
+        $this->assertSame('14:17:31', $pitStop->getTime()->format('H:i:s'));
+        $this->assertSame(1, $pitStop->getStop());
+        $this->assertSame(8, $pitStop->getLap());
+
+        $pitStop = $race->getPitStops()->next();
+
+        $this->assertSame('perez', $pitStop->getDriverId());
+        $this->assertSame(22.679, $pitStop->getDuration());
+        $this->assertSame('14:18:56', $pitStop->getTime()->format('H:i:s'));
+        $this->assertSame(1, $pitStop->getStop());
+        $this->assertSame(9, $pitStop->getLap());
+    }
+
     public function testDeserializeRaces()
     {
         $httpResponse = $this->createHttpResponseFromFile('races.json', 'application/json; charset=utf-8');

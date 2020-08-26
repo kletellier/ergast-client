@@ -83,6 +83,20 @@ class Race
         $this->pitStops = new ArrayCollection();
 
          // fill optional ArrayCollection
+        if(isset($data->PitStops))
+        {
+            $this->pitStops = $this->fillPitStopsCollection($data->PitStops);
+        }
+    }
+
+    private function fillPitStopsCollection($data) : ArrayCollection
+    {
+        $ret = new ArrayCollection();
+        foreach($data as $pitstop)
+        {
+            $ret[] = new \BrieucThomas\ErgastClient\Model\PitStop($pitstop);
+        }
+        return $ret;
     }
 
     /**
