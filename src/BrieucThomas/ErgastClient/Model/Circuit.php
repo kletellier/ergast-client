@@ -32,6 +32,14 @@ class Circuit
      */
     private $url;
 
+    public function __construct($data)
+    {
+        $this->id = $data->circuitId;
+        $this->name = $data->circuitName;
+        $this->url = $data->url;
+        $this->location = new \BrieucThomas\ErgastClient\Model\Location($data->Location);
+    }
+
     /**
      * Returns the circuit slug.
      *

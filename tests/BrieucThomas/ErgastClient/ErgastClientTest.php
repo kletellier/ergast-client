@@ -18,7 +18,45 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 class ErgastClientTest extends \PHPUnit_Framework_TestCase
-{
+{   
+    public function testDeserializeCircuits()
+    {
+        $httpResponse = $this->createHttpResponseFromFile('circuits.json', 'application/json; charset=utf-8');
+        $ergastResponse = $this->deserializeHttpResponse($httpResponse);
+
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Response', $ergastResponse); 
+        $this->assertSame('f1', $ergastResponse->getSeries());
+        $this->assertSame(16, $ergastResponse->getTotal());
+        $this->assertSame(30, $ergastResponse->getLimit());
+        $this->assertSame(0, $ergastResponse->getOffset());
+        $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $ergastResponse->getCircuits());
+        $this->assertCount(16, $ergastResponse->getCircuits());
+
+        $circuit = $ergastResponse->getCircuits()->first();
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Circuit', $circuit);
+        $this->assertSame('adelaide', $circuit->getId());
+        $this->assertSame('Adelaide Street Circuit', $circuit->getName());
+        $this->assertSame('http://en.wikipedia.org/wiki/Adelaide_Street_Circuit', $circuit->getUrl());
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Location', $circuit->getLocation());
+        $this->assertSame('Adelaide', $circuit->getLocation()->getLocality());
+        $this->assertSame('Australia', $circuit->getLocation()->getCountry());
+        $this->assertSame(-34.9272, $circuit->getLocation()->getLatitude());
+        $this->assertSame(138.617, $circuit->getLocation()->getLongitude());
+        $this->assertNull($circuit->getLocation()->getAltitude());
+
+        $circuit = $ergastResponse->getCircuits()->next();
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Circuit', $circuit);
+        $this->assertSame('estoril', $circuit->getId());
+        $this->assertSame('Autódromo do Estoril', $circuit->getName());
+        $this->assertSame('http://en.wikipedia.org/wiki/Aut%C3%B3dromo_do_Estoril', $circuit->getUrl());
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Location', $circuit->getLocation());
+        $this->assertSame('Estoril', $circuit->getLocation()->getLocality());
+        $this->assertSame('Portugal', $circuit->getLocation()->getCountry());
+        $this->assertSame(38.7506, $circuit->getLocation()->getLatitude());
+        $this->assertSame(-9.39417, $circuit->getLocation()->getLongitude());
+        $this->assertNull($circuit->getLocation()->getAltitude());
+    }
+
     public function testDeserializeConstructors()
     {
         $httpResponse = $this->createHttpResponseFromFile('constructors.json', 'application/json; charset=utf-8');

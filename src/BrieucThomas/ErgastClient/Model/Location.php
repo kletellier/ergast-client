@@ -37,6 +37,14 @@ class Location
      */
     private $altitude;
 
+    public function __construct($data)
+    {
+        $this->latitude = (float)$data->lat;
+        $this->longitude = (float)$data->long;
+        $this->country = $data->country;
+        $this->locality = $data->locality;
+    }
+
     public function getLocality(): string
     {
         return $this->locality;

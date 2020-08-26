@@ -97,10 +97,14 @@ class Response
             {
                 $this->constructors = $this->fillConstructorsCollection($MRData->ConstructorTable);
             }
+            if(isset($MRData->CircuitTable))
+            {
+                $this->circuits = $this->fillCircuitsCollection($MRData->CircuitTable);
+            }
         }
         catch(\Exception $ex)
         {
-
+            var_dump($ex->getMessage());
         }     
     }
 
@@ -121,6 +125,18 @@ class Response
         {
             $ret[] = new \BrieucThomas\ErgastClient\Model\Constructor($constructor);
         }
+        return $ret;
+    }
+
+    private function fillCircuitsCollection($data) : ArrayCollection
+    {
+        
+        $ret = new ArrayCollection();
+        foreach($data->Circuits as $circuit)
+        {
+            $ret[] = new \BrieucThomas\ErgastClient\Model\Circuit($circuit);
+        }
+        
         return $ret;
     }
     
