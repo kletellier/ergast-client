@@ -46,6 +46,18 @@ class Qualifying
      */
     private $q3;
 
+    public function __construct($data)
+    {
+        $this->driver = new \BrieucThomas\ErgastClient\Model\Driver($data->Driver);
+        $this->constructor = new \BrieucThomas\ErgastClient\Model\Constructor($data->Constructor);
+        $this->number = $data->number;
+        $this->position = $data->position;
+        if(isset($data->Q1)){$this->q1 = $data->Q1;}
+        if(isset($data->Q2)){$this->q2 = $data->Q2;}
+        if(isset($data->Q3)){$this->q3 = $data->Q3;}
+        
+    }
+
     public function getDriver(): Driver
     {
         return $this->driver;

@@ -82,10 +82,14 @@ class Race
         $this->laps = new ArrayCollection();
         $this->pitStops = new ArrayCollection();
 
-         // fill optional ArrayCollection
+        // fill optional ArrayCollection
         if(isset($data->PitStops))
         {
             $this->pitStops = $this->fillPitStopsCollection($data->PitStops);
+        }
+        if(isset($data->QualifyingResults))
+        {             
+            $this->qualifying = $this->fillQualifyingCollection($data->QualifyingResults);
         }
     }
 
@@ -95,6 +99,16 @@ class Race
         foreach($data as $pitstop)
         {
             $ret[] = new \BrieucThomas\ErgastClient\Model\PitStop($pitstop);
+        }
+        return $ret;
+    }
+
+    private function fillQualifyingCollection($data) : ArrayCollection
+    {
+        $ret = new ArrayCollection();
+        foreach($data as $qualifying)
+        {
+            $ret[] = new \BrieucThomas\ErgastClient\Model\Qualifying($qualifying);
         }
         return $ret;
     }

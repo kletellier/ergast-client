@@ -19,6 +19,39 @@ use Psr\Http\Message\ResponseInterface;
 
 class ErgastClientTest extends \PHPUnit_Framework_TestCase
 {   
+
+    public function testDeserializeQualifying()
+    {
+        $httpResponse = $this->createHttpResponseFromFile('qualifying.json', 'application/json; charset=utf-8');
+        $ergastResponse = $this->deserializeHttpResponse($httpResponse);
+
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Response', $ergastResponse); 
+        $this->assertSame('f1', $ergastResponse->getSeries());
+        $this->assertSame(30, $ergastResponse->getLimit());
+        $this->assertSame(0, $ergastResponse->getOffset());
+        $this->assertSame(20, $ergastResponse->getTotal());
+        $this->assertCount(1, $ergastResponse->getRaces());
+
+        $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $ergastResponse->getRaces());
+        $this->assertCount(1, $ergastResponse->getRaces());
+        $race = $ergastResponse->getRaces()->first();
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Race', $race);
+        $this->assertSame('Turkish Grand Prix', $race->getName());
+        $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $race->getQualifying());
+        $this->assertCount(20, $race->getQualifying());
+ 
+        $qualifying = $race->getQualifying()->first();
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Qualifying', $qualifying);
+
+        $this->assertSame('massa', $qualifying->getDriver()->getId());
+        $this->assertSame('ferrari', $qualifying->getConstructor()->getId());
+        $this->assertSame(1, $qualifying->getPosition());
+        $this->assertSame(2, $qualifying->getNumber());
+        $this->assertSame('1:25.994', $qualifying->getQ1());
+        $this->assertSame('1:26.192', $qualifying->getQ2());
+        $this->assertSame('1:27.617', $qualifying->getQ3());
+    }
+
     public function testDeserializePitStops()
     {
         $httpResponse = $this->createHttpResponseFromFile('pitstops.json', 'application/json; charset=utf-8');
