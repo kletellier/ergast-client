@@ -21,6 +21,11 @@ class ConstructorStanding extends AbstractStanding
      */
     private $constructor;
 
+    function __construct() {
+        parent::__construct();
+        
+    }
+
     public function getConstructor(): Constructor
     {
         return $this->constructor;

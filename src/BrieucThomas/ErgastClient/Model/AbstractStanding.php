@@ -32,6 +32,11 @@ abstract class AbstractStanding
      * @Type("int")
      */
     private $wins;
+    
+    public function __construct()
+    {
+        
+    }
 
     public function getPosition(): int
     {

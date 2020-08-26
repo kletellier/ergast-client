@@ -27,6 +27,10 @@ class DriverStanding extends AbstractStanding
      */
     private $constructors;
 
+    function __construct() {
+        parent::__construct(); 
+    }
+
     public function getDriver(): Driver
     {
         return $this->driver;
