@@ -19,6 +19,38 @@ use Psr\Http\Message\ResponseInterface;
 
 class ErgastClientTest extends \PHPUnit_Framework_TestCase
 {   
+    public function testDeserializeFinishingStatus()
+    {
+        $httpResponse = $this->createHttpResponseFromFile('status.json', 'application/json; charset=utf-8');
+        $ergastResponse = $this->deserializeHttpResponse($httpResponse);
+
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\Response', $ergastResponse); 
+        $this->assertSame('f1', $ergastResponse->getSeries());
+        $this->assertSame(38, $ergastResponse->getTotal());
+        $this->assertSame(30, $ergastResponse->getLimit());
+        $this->assertSame(0, $ergastResponse->getOffset());
+        $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $ergastResponse->getFinishingStatues());
+        $this->assertCount(30, $ergastResponse->getFinishingStatues());
+
+        $status = $ergastResponse->getFinishingStatues()->first();
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\FinishingStatus', $status);
+        $this->assertSame(1, $status->getId());
+        $this->assertSame('Finished', $status->getName());
+        $this->assertSame(65, $status->getCount());
+
+        $status = $ergastResponse->getFinishingStatues()->next();
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\FinishingStatus', $status);
+        $this->assertSame(2, $status->getId());
+        $this->assertSame('Disqualified', $status->getName());
+        $this->assertSame(9, $status->getCount());
+
+        $status = $ergastResponse->getFinishingStatues()->next();
+        $this->assertInstanceOf('BrieucThomas\ErgastClient\Model\FinishingStatus', $status);
+        $this->assertSame(3, $status->getId());
+        $this->assertSame('Accident', $status->getName());
+        $this->assertSame(5, $status->getCount());
+    }
+
     public function testDeserializeCircuits()
     {
         $httpResponse = $this->createHttpResponseFromFile('circuits.json', 'application/json; charset=utf-8');

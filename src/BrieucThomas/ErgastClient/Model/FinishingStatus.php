@@ -29,6 +29,13 @@ class FinishingStatus
      */
     private $count;
 
+    public function __construct($data)
+    {
+        $this->id = $data->statusId;
+        $this->name = $data->status;
+        $this->count = $data->count;
+    }
+
     public function getId(): int
     {
         return $this->id;

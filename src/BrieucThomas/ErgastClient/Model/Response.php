@@ -101,6 +101,10 @@ class Response
             {
                 $this->circuits = $this->fillCircuitsCollection($MRData->CircuitTable);
             }
+            if(isset($MRData->StatusTable))
+            {
+                $this->finishingStatues = $this->fillStatusCollection($MRData->StatusTable);
+            }
         }
         catch(\Exception $ex)
         {
@@ -129,14 +133,22 @@ class Response
     }
 
     private function fillCircuitsCollection($data) : ArrayCollection
-    {
-        
+    {        
         $ret = new ArrayCollection();
         foreach($data->Circuits as $circuit)
         {
             $ret[] = new \BrieucThomas\ErgastClient\Model\Circuit($circuit);
-        }
-        
+        }        
+        return $ret;
+    }
+
+    private function fillStatusCollection($data) : ArrayCollection
+    {        
+        $ret = new ArrayCollection();
+        foreach($data->Status as $status)
+        {
+            $ret[] = new \BrieucThomas\ErgastClient\Model\FinishingStatus($status);
+        }  
         return $ret;
     }
     
