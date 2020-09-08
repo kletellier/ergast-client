@@ -10,7 +10,7 @@
 namespace BrieucThomas\ErgastClient\Request;
 
 use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\UriTemplate;
+use GuzzleHttp\UriTemplate\UriTemplate;
 use Psr\Http\Message\RequestInterface;
 
 /**

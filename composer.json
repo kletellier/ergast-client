@@ -24,7 +24,8 @@
         "php": ">=7.0",
         "psr/http-message": "^1.0",
         "doctrine/collections": "^1.0",
-        "guzzlehttp/guzzle": "^6.0"
+        "guzzlehttp/guzzle": "^7.0.1",
+        "guzzlehttp/uri-template": "^0.2.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.0",
